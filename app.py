@@ -36,15 +36,14 @@ if start_date > end_date:
 # Proceed only if valid input is selected
 elif crypto != 'Select' and start_date and end_date:
     try:
-        # Ensure end_date is not today (avoid empty DataFrame on Streamlit Cloud)
-        if end_date >= datetime.date.today():
-            end_date = datetime.date.today() - datetime.timedelta(days=1)
+        # Ensure end_date never goes beyond yesterday
+        safe_end = min(end_date, yesterday)
 
         # Fetch data
         df = yf.download(
             crypto,
             start=start_date,
-            end=end_date,
+            end=safe_end,
             progress=False,
             threads=False
         )
@@ -52,9 +51,8 @@ elif crypto != 'Select' and start_date and end_date:
 
         if df.empty:
             st.warning("⚠️ No data found. Try a different crypto or date range.")
-            st.write("Debug info:", crypto, start_date, end_date)  # optional debug
         else:
-            st.success(f"✅ Data loaded for {crypto} from {start_date} to {end_date}")
+            st.success(f"✅ Data loaded for {crypto} from {start_date} to {safe_end}")
 
             # Show raw data
             st.subheader("🔹 Latest Price Data")

@@ -55,7 +55,7 @@ streamlit run app.py
 ## 🖼️ Screenshot
 
 ![Dashboard Preview](https://github.com/SUJAYBARAI/Crypto-analysis-dashboard/blob/main/Screenshot.png)
-
+##Live demo: https://crypto-analysis-dashboard-kgaoypbdhjhhmcxu87zh3m.streamlit.app/
 ---
 
 ## 🤝 Contributing
@@ -83,3 +83,4 @@ This project is licensed under the **MIT License** — feel free to use it for l
 - [Pandas](https://pandas.pydata.org/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
+

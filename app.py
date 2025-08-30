@@ -3,6 +3,10 @@ import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
 import datetime
+import warnings
+
+# Suppress irrelevant warnings (like SyntaxWarning from yfinance)
+warnings.filterwarnings("ignore", category=SyntaxWarning)
 
 # Configure page
 st.set_page_config(page_title="Crypto Dashboard", layout="wide")
@@ -39,18 +43,18 @@ elif crypto != 'Select' and start_date and end_date:
         # Ensure end_date never goes beyond yesterday
         safe_end = min(end_date, yesterday)
 
-        # Fetch data
+        # Fetch data safely
         df = yf.download(
             crypto,
             start=start_date,
             end=safe_end,
             progress=False,
             threads=False
-        )
-        df.dropna(inplace=True)
+        ).dropna()
 
         if df.empty:
-            st.warning("⚠️ No data found. Try a different crypto or date range.")
+            st.warning(f"⚠️ No data found for {crypto} between {start_date} and {safe_end}. Try a different crypto or date range.")
+            st.stop()
         else:
             st.success(f"✅ Data loaded for {crypto} from {start_date} to {safe_end}")
 
